@@ -1,0 +1,3076 @@
+1)
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <!--<ltng:require styles="{!$Resource.sldsnew +'/assets/styles/salesforce-lightning-design-system.css'}" />-->
+	<div style = "font-sie:30px;color:red">
+        hello 
+    </div>
+    <ui:button class="slds-button slds-button--brand" label="hello user"></ui:button>
+    <lightning:button label="hello ltng" variant="brand" />   
+    <lightning:button label="hello ltng" variant="neutral" />   
+    <lightning:button label="hello ltng" variant="destructive" />   
+    <lightning:button label="hello ltng" variant="inverse" />   
+    
+</aura:application>
+
+-----------------------------------------------------------------------------
+
+2)
+COMPONENTS :
+
+<aura:component >
+    <aura:attribute name="fname" type="String" default="Malvika" />
+    <aura:attribute name="lname" type="String" default="Sharma" />
+    
+    <div style = "border:5px solid red;height:300px;width:400px;margin:auto;text-align:center">
+        Welcome to Lightning : {!v.fname} {!v.lname}
+    </div>
+</aura:component>
+
+App :
+
+
+<aura:application extends="force:slds">
+    <c:DemoComp />
+</aura:application>
+
+For overriding actual values
+<c:DemoComp fname="harry" lname="potter" />
+    
+if <aura:attribute name="fname" type="String" default="Malvika" required="true" />
+required =  true and default value not given..it throws an error
+
+------------------------------------------------------------------------------
+
+3)
+if-else condition :
+
+COMPONENT :
+
+<aura:component >
+    <aura:attribute name="fname" type="String" default="Malvika" required="true" />
+    <aura:attribute name="lname" type="String" default="Sharma" required="true" />
+    <aura:attribute name="num1" type="Integer" />
+    <aura:attribute name="num2" type="Integer"/>
+    
+    <div style = "border:5px solid red;height:300px;width:400px;margin:auto;text-align:center">
+        Welcome to Lightning : {!v.fname} {!v.lname}
+        <br/>
+        <br/>
+        <aura:if isTrue="{!v.num1 &gt; v.num2}">
+            <B>Big value is {!v.num1} </B>
+            <aura:set attribute="else">
+                <B>Big value is {!v.num2} </B>
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>
+
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:DemoComp num1="500" num2="300" />   
+</aura:application>
+
+----------------------------------------------------------------------
+
+4)
+
+greater no. in 3
+
+COMPONENT :
+
+<aura:component >
+    <aura:attribute name="fname" type="String" default="Malvika" required="true" />
+    <aura:attribute name="lname" type="String" default="Sharma" required="true" />
+    <aura:attribute name="num1" type="Integer" />
+    <aura:attribute name="num2" type="Integer"/>
+    <aura:attribute name="num3" type="Integer"/>
+    
+    <div style = "border:5px solid red;height:300px;width:400px;margin:auto;text-align:center">
+        Welcome to Lightning : {!v.fname} {!v.lname}
+        <br/>
+        <br/>
+        <aura:if isTrue="{! v.num1 &gt; v.num2 &amp;&amp; v.num1 &gt; v.num3}">
+            <B>Big value is {!v.num1} </B>
+            <aura:set attribute="else">
+                <aura:if isTrue="{!v.num2 &gt; v.num3}">
+                <B>Big value is {!v.num2} </B>
+                    <aura:set attribute="else">
+                         <B>Big value is {!v.num3} </B>
+                    </aura:set>
+                </aura:if>
+            </aura:set>
+        </aura:if>
+        
+    </div>
+</aura:component>
+
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:DemoComp num1="500" num2="300" num3="700"/>   
+</aura:application>
+
+-----------------------------------------------------------------------
+
+
+List iteration :
+
+COMPONENT :
+
+<aura:component >
+    <aura:attribute name="fname" type="String" default="Malvika" required="true" />
+    <aura:attribute name="lname" type="String" default="Sharma" required="true" />
+    <aura:attribute name="num1" type="Integer" />
+    <aura:attribute name="num2" type="Integer"/>
+    <aura:attribute name="num3" type="Integer"/>
+    <aura:attribute name="elist" type="List" default="Hyd,Bang,Chennai,Mumbai"/>
+    
+    <div style = "border:5px solid red;height:300px;width:400px;margin:auto;text-align:center">
+        Welcome to Lightning : {!v.fname} {!v.lname}
+        <br/>
+        <br/>        
+        <OL>
+            <aura:iteration items="{!v.elist}" var="e">
+                <li>{!e}</li>
+            </aura:iteration>
+        </OL>
+    </div>
+</aura:component>
+
+if we dnt provide values in componenet, then add in app :
+
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:DemoComp num1="2500" num2="1200" num3="1700" elist='a,b,c,d'/>   
+</aura:application>
+
+-----------------------------------------------------------------------
+
+5)
+To give a msg if list is empty :
+
+COMPONENT :
+
+<aura:component >
+    <aura:attribute name="fname" type="String" default="Malvika" required="true" />
+    <aura:attribute name="lname" type="String" default="Sharma" required="true" />
+    <aura:attribute name="num1" type="Integer" />
+    <aura:attribute name="num2" type="Integer"/>
+    <aura:attribute name="num3" type="Integer"/>
+    <aura:attribute name="elist" type="List" />
+    
+    <div style = "border:5px solid red;height:300px;width:400px;margin:auto;text-align:center">
+        Welcome to Lightning : {!v.fname} {!v.lname}
+        <br/>
+        <br/>  
+        <aura:if isTrue="{! !empty(v.elist)}">
+            <OL>
+            <aura:iteration items="{!v.elist}" var="e">
+                <li>{!e}</li>
+            </aura:iteration>
+        </OL>
+            <aura:set attribute="else">
+                <B>list is empty</B>
+            </aura:set>
+        </aura:if>
+        
+    </div>
+</aura:component>
+
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:DemoComp num1="2500" num2="1200" num3="1700" />   
+</aura:application>
+
+------------------------------------------------------------------------
+
+6)
+For styling :
+
+COMPONENT :
+
+<aura:component >
+    <div>
+        <div class="st1">
+            Div section 1
+        </div>
+        <div class="st2">
+            Div section 2
+        </div>
+    </div>
+</aura:component>
+
+Style : (for child styling give space )
+
+.THIS .st1 {
+    width:500px;
+    height:200px;
+    background:blue;
+    border:5px solid red;
+    padding:10px;
+}
+.THIS .st2 {
+    width:500px;
+    height:200px;
+    background:lime;
+    border:5px dashed blue;
+    padding:10px;
+}
+
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:StyleComp  />
+</aura:application>
+
+--------------------------------------------------------------------------
+
+7)
+
+Call me activity(phone and mail) :
+
+COMPONENT :
+
+<aura:component >
+    <aura:attribute name="phnum" type="String" default="040-1234" />
+    <a href="{! concat('tel:', v.phnum)}">
+        <div class="cstyle">
+            
+        </div>
+    </a>
+	<br/>
+    <br/>
+    <a href="{! concat('mailto:', v.email)}">
+        <div class="estyle">
+         	click to send email   
+        </div>
+    </a>
+</aura:component>
+
+
+STYLE :
+
+.THIS .cstyle {
+    width:300px;
+    height:300px;
+    margin:auto;
+    background:url(/resource/callme);
+    background-repeat:no-repeat;
+}
+.THIS .estyle {
+    width:300px;
+    height:300px;
+    margin:auto;
+    border:4px solid blue;
+    font-family:forte;
+    font-style:bold;
+    color:red;
+    font-size:0.5in;
+}
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:CallMeComp  />
+</aura:application>
+
+
+----------------------------------------------------------------------------
+
+8)
+Panic button activity :
+
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:PanicComp  />
+</aura:application>
+
+STYLE :
+.THIS .btnstyle {
+    height:300px;
+    width:300px;
+    margin:auto;
+    border:2px solid red;
+    background:URL(/resource/panic);
+    background-repeat:no-repeat;
+}
+
+COMPONENT :
+<aura:component >
+    <div class="slds">
+        <div class="btnstyle" onclick="{!c.playMusic}">           
+        </div>
+    </div>
+    <audio aura:id="sound"  autoplay="autoplay">       
+    </audio>
+</aura:component>
+
+
+CONTROLLER :
+
+({
+	playMusic : function(component, event, helper) {
+		var ms=$A.get("$Resource.sad");
+		var ad=component.find("sound").getElement();
+        ad.src=ms;
+	}
+})
+
+---------------------------------------------------------------------------
+
+9)
+WORKING WITH HELPER :
+(REMOVE innerHTML)
+
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:PanicComp  />
+</aura:application>
+
+STYLE :
+.THIS .btnstyle {
+    height:300px;
+    width:300px;
+    margin:auto;
+    border:2px solid red;
+    background:URL(/resource/panic);
+    background-repeat:no-repeat;
+}
+
+COMPONENT :
+<aura:component >
+    <aura:attribute name="PanicMsg" type="String" />
+    <div class="slds">
+        <div class="btnstyle" onclick="{!c.playMusic}" onmouseover="{!c.showMsg}">           
+        </div>
+    </div>
+    <audio aura:id="sound"  autoplay="autoplay">       
+    </audio>
+    <div aura:id="disp">
+        {!v.PanicMsg}
+    </div>
+</aura:component>
+
+
+CONTROLLER :
+
+({
+	playMusic : function(component, event, helper) {
+		var ms=$A.get('$Resource.sad');
+        var ad=component.find("sound").getElement();
+        ad.src=ms;
+        component.set("v.PanicMsg","Sad-Thrombone-Music playing..");
+        var dEle=component.find("disp").getElement();
+        $A.util.removeClass(dEle, "slds-hide");
+	},
+    showMsg : function(component, event, helper)
+    {
+        helper.displayMsg(component);
+    }
+})
+
+HELPER :
+
+({
+	displayMsg : function(component) {
+        component.set("v.PanicMsg", "Please click to play music..");
+        var dEle = component.find("disp").getElement();
+        $A.util.toggleClass(dEle, "slds-hide");
+	}
+})
+
+--------------------------------------------
+
+10)
+
+DOCUMENTATION :
+
+PANIC :
+
+
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:PanicComp  />
+</aura:application>
+
+STYLE :
+.THIS .btnstyle {
+    height:300px;
+    width:300px;
+    margin:auto;
+    border:2px solid red;
+    background:URL(/resource/panic);
+    background-repeat:no-repeat;
+}
+
+COMPONENT :
+<aura:component description="This component triggers alarm in case of emergency">
+    <aura:attribute name="PanicMsg" type="String" description="alert msg shown in component" />
+    <div class="slds">
+        <div class="btnstyle" onclick="{!c.playMusic}" onmouseover="{!c.showMsg}">           
+        </div>
+    </div>
+    <audio aura:id="sound"  autoplay="autoplay">       
+    </audio>
+    <div aura:id="disp">
+        {!v.PanicMsg}
+    </div>
+</aura:component>
+
+
+CONTROLLER :
+
+({
+	playMusic : function(component, event, helper) {
+		var ms=$A.get('$Resource.sad');
+        var ad=component.find("sound").getElement();
+        ad.src=ms;
+        component.set("v.PanicMsg","Sad-Thrombone-Music playing..");
+        var dEle=component.find("disp").getElement();
+        $A.util.removeClass(dEle, "slds-hide");
+	},
+    showMsg : function(component, event, helper)
+    {
+        helper.displayMsg(component);
+    }
+})
+
+HELPER :
+
+({
+	displayMsg : function(component) {
+        component.set("v.PanicMsg", "Please click to play music..");
+        var dEle = component.find("disp").getElement();
+        $A.util.toggleClass(dEle, "slds-hide");
+	}
+})
+
+DOCUMENTATION :
+
+<aura:documentation>
+	<aura:description>
+    	<table>
+            <tr><th>Sound Name</th><th>URL</th></tr>
+            <tr>
+                <td>Sad Thrombone</td>
+                <td>$Resource.Sad</td>
+            </tr>
+            <tr>
+                <td>Explosion</td>
+                <td>$Resource.Explosion</td>
+            </tr>
+        </table>
+    </aura:description>
+	<aura:example name="PanicComp" ref="c:PanicComp" label="Panic">
+		Panic button with sound
+	</aura:example>
+</aura:documentation>
+
+-------------------------------------------------------------------------------
+
+11)
+Using ui button and list with static values :
+
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:PanicComp  />
+</aura:application>
+
+STYLE :
+.THIS .btnstyle {
+    height:300px;
+    width:300px;
+    margin:auto;
+    border:2px solid red;
+    background:URL(/resource/panic);
+    background-repeat:no-repeat;
+}
+
+COMPONENT :
+<aura:component description="This component triggers alarm in case of emergency">
+    <aura:attribute name="PanicMsg" type="String" description="alert msg shown in component" />
+    <aura:attribute name="inpdata" type="List" default="sad,Explosion" />
+    <div class="slds" style="text-align:center">
+        <div class="btnstyle" onclick="{!c.playMusic}" onmouseover="{!c.showMsg}">           
+        </div>
+        
+        <ui:inputSelect label="Select sound to play">
+            <aura:iteration items="{!v.inpdata}" var="i">
+                <ui:inputSelectOption label="{! i}" text = "{! i}">
+                </ui:inputSelectOption>
+                </aura:iteration>
+            
+        </ui:inputSelect> 
+    </div>
+    <audio aura:id="sound"  autoplay="autoplay">       
+    </audio>
+    <div aura:id="disp">
+        {!v.PanicMsg}
+    </div>
+</aura:component>
+
+
+------------------------------------------------------------
+
+12)
+Using handler.. no list..dynamic values
+
+COMPONENT :
+
+<aura:component description="This component triggers alarm in case of emergency">
+    <aura:attribute name="PanicMsg" type="String" description="alert msg shown in component" />
+    <!--<aura:attribute name="inpdata" type="List" default="sad,Explosion" />-->
+    <aura:handler name="init" value="{!this}" action="{!c.loadData}" />
+    <div class="slds" style="text-align:center">
+        <div class="btnstyle" onclick="{!c.playMusic}" onmouseover="{!c.showMsg}">           
+        </div>
+        
+        <ui:inputSelect aura:id="inps" class="slds-input" labelClass="slds-form-element__label" label="Select sound to play">
+                        
+        </ui:inputSelect> 
+    </div>
+    <audio aura:id="sound"  autoplay="autoplay">       
+    </audio>
+    <div aura:id="disp">
+        {!v.PanicMsg}
+    </div>
+</aura:component>
+
+CONTROLLER :
+
+({
+	playMusic : function(component, event, helper) {
+		var ms=$A.get('$Resource.sad');
+        var ad=component.find("sound").getElement();
+        ad.src=ms;
+        component.set("v.PanicMsg","Sad-Thrombone-Music playing..");
+        var dEle=component.find("disp").getElement();
+        $A.util.removeClass(dEle, "slds-hide");
+	},
+    showMsg : function(component, event, helper)
+    {
+        helper.displayMsg(component);
+    },
+    loadData : function(component, event, helper)
+    {
+        var opts = [
+            {
+                label:"sad-thrombone",
+                value:"sad"
+            },
+            {
+                label:"explosion-sound",
+                value:"explosion"
+            }
+        ];
+        component.find("inps").set("v.options",opts);
+    }
+})
+
+---------------------------------------------------------------------
+
+13)
+
+Adding Event like playing sound on selection from picklist
+
+COMPONENT :
+
+<aura:component description="This component triggers alarm in case of emergency">
+    <aura:attribute name="PanicMsg" type="String" description="alert msg shown in component" />
+    <!--<aura:attribute name="inpdata" type="List" default="sad,Explosion" />-->
+    <aura:attribute name="sound" type="String"  />
+    <aura:handler name="init" value="{!this}" action="{!c.loadData}" />
+    <div class="slds" style="text-align:center">
+        <div class="btnstyle" onclick="{!c.playMusic}" onmouseover="{!c.showMsg}">           
+        </div>      
+        <ui:inputSelect change="{!c.selectSound}" aura:id="inps" class="slds-input" labelClass="slds-form-element__label" label="Select sound to play">                    
+        </ui:inputSelect> 
+    </div>
+    <audio aura:id="sound"  autoplay="autoplay">       
+    </audio>
+    <div aura:id="disp">
+        {!v.PanicMsg}
+    </div>
+</aura:component>
+
+CONTROLLER :
+
+({
+    playMusic : function(component, event, helper) {
+        var selsn=component.get("v.sound");
+        var asnd = "";
+        switch(selsn){
+            case "sad":
+                asnd = $A.get("$Resource.sad");  
+                component.set("v.PanicMsg","Sad-Thrombone-Music playing..");
+                break;
+            case "explosion":
+                asnd = $A.get("$Resource.explosion");  
+                component.set("v.PanicMsg","explosionMusic playing..");
+                break;
+                
+        }
+        var ad=component.find("sound").getElement();
+        ad.src=asnd;
+        
+        var dEle=component.find("disp").getElement();
+        $A.util.removeClass(dEle, "slds-hide");
+    },
+    showMsg : function(component, event, helper)
+    {
+        helper.displayMsg(component);
+    },
+    loadData : function(component, event, helper)
+    {
+        var opts = [
+            {
+                label:"sad-thrombone",
+                value:"sad"
+            },
+            {
+                label:"explosion-sound",
+                value:"explosion"
+            }
+        ];
+        component.find("inps").set("v.options",opts);
+    },
+    selectSound : function(component, event, helper)
+    {
+        var sn = component.find("inps").get("v.value");
+        component.set("v.sound",sn);
+    }
+})
+
+
+----------------------------------------------
+
+14) 
+
+For button control :
+remove border frm style 
+
+COMPONENT :
+
+<aura:component description="This component triggers alarm in case of emergency">
+    <aura:attribute name="PanicMsg" type="String" description="alert msg shown in component" />
+    <!--<aura:attribute name="inpdata" type="List" default="sad,Explosion" />-->
+    <aura:attribute name="sound" type="String"  />
+    <aura:handler name="init" value="{!this}" action="{!c.loadData}" />
+    <div class="slds" style="text-align:center">
+        <lightning:button onclick="{!c.playMusic}" variant="destructive">
+        <div class="btnstyle"  onmouseover="{!c.showMsg}">           
+        </div>     
+        </lightning:button>
+        <ui:inputSelect change="{!c.selectSound}" aura:id="inps" class="slds-input" labelClass="slds-form-element__label" label="Select sound to play">                    
+        </ui:inputSelect> 
+    </div>
+    <audio aura:id="sound"  autoplay="autoplay">       
+    </audio>
+    <div aura:id="disp">
+        {!v.PanicMsg}
+    </div>
+</aura:component>
+
+CONTROLLER :
+
+({
+    playMusic : function(component, event, helper) {
+        var selsn=component.get("v.sound");
+        var asnd = "";
+        switch(selsn){
+            case "sad":
+                asnd = $A.get("$Resource.sad");  
+                component.set("v.PanicMsg","Sad-Thrombone-Music playing..");
+                break;
+            case "explosion":
+                asnd = $A.get("$Resource.explosion");  
+                component.set("v.PanicMsg","explosionMusic playing..");
+                break;
+                
+        }
+        var ad=component.find("sound").getElement();
+        ad.src=asnd;
+        
+        var dEle=component.find("disp").getElement();
+        $A.util.removeClass(dEle, "slds-hide");
+    },
+    showMsg : function(component, event, helper)
+    {
+        helper.displayMsg(component);
+    },
+    loadData : function(component, event, helper)
+    {
+        var opts = [
+            {
+                label:"sad-thrombone",
+                value:"sad"
+            },
+            {
+                label:"explosion-sound",
+                value:"explosion"
+            }
+        ];
+        component.find("inps").set("v.options",opts);
+    },
+    selectSound : function(component, event, helper)
+    {
+        var sn = component.find("inps").get("v.value");
+        component.set("v.sound",sn);
+    }
+})
+
+
+-------------------------------------------------------------------
+
+15)
+
+Working with APEX :
+
+Apex Class :
+public class TestController {
+    @AuraEnabled
+    public static String showMessage(){
+        return 'Hello lightning.....msg from APEX';
+    }
+
+}
+
+
+COMPONENT :
+
+<aura:component controller="TestController">
+    <aura:attribute name="msg" type="String" />
+	<div  class="slds" style="text-align:center">
+        <lightning:button label="Call Apex" onclick="{!c.callApex}"/>
+        <br/>
+        <br/>
+        {!v.msg}
+    </div>
+</aura:component>
+
+CONTROLLER :
+
+({
+    callApex : function(component, event, helper) {
+        var ac=component.get("c.showMessage");
+        ac.setCallback(this,function(response)
+                       {
+                       if(response.getState()=="SUCCESS")
+        {
+            component.set("v.msg",response.getReturnValue());
+        }
+    }
+    );
+    $A.enqueueAction(ac);
+}
+ })
+ 
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:ApexComp />
+</aura:application>
+
+-------------------------------------------------------------------------------
+
+16)
+
+Quering fields from created object for Panic button 
+
+Apex Class :
+
+public class SoundController {
+    @AuraEnabled
+    public static list<SoundObj__c> showSounds()
+    {
+        return [select Name,soundURL__c from SoundObj__c order by Name];
+    }
+
+}
+
+COMPONENT :
+
+<aura:component description="This component triggers alarm in case of emergency" controller="SoundController">
+    <aura:attribute name="PanicMsg" type="String" description="alert msg shown in component" />
+    <aura:attribute name="sound" type="String" />
+    <aura:attribute name="inpdata" type="List" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.loadData}" />
+    <div class="slds" style="text-align:center">
+        <lightning:button onclick="{!c.playMusic}" variant="destructive">
+        <div class="btnstyle"  onmouseover="{!c.showMsg}">           
+        </div>     
+        </lightning:button>
+        <ui:inputSelect change="{!c.selectSound}" aura:id="inps" class="slds-input" labelClass="slds-form-element__label" label="Select sound to play">                    
+            <aura:iteration items="{!v.inpdata}" var="i">
+                <ui:inputSelectOption label="{! i.Name}" text="{! i.Name}"></ui:inputSelectOption>
+            </aura:iteration>
+        </ui:inputSelect> 
+    </div>
+    <audio aura:id="sound"  autoplay="autoplay">       
+    </audio>
+    <div aura:id="disp">
+        {!v.PanicMsg}
+    </div>
+</aura:component>
+
+CONTROLLER :
+
+({
+    playMusic : function(component, event, helper) {
+        var selsn=component.get("v.sound");
+        var asnd = "";
+        switch(selsn){
+            case "sad":
+                asnd = $A.get("$Resource.sad");  
+                component.set("v.PanicMsg","Sad-Thrombone-Music playing..");
+                break;
+            case "explosion":
+                asnd = $A.get("$Resource.explosion");  
+                component.set("v.PanicMsg","explosionMusic playing..");
+                break;
+                
+        }
+        var ad=component.find("sound").getElement();
+        ad.src=asnd;
+        
+        var dEle=component.find("disp").getElement();
+        $A.util.removeClass(dEle, "slds-hide");
+    },
+    showMsg : function(component, event, helper)
+    {
+        helper.displayMsg(component);
+    },
+    loadData : function(component, event, helper)
+    {
+        var ac=component.get("c.showSounds");
+        ac.setCallback(this,function(response)
+        {
+                       if(response.getState()=="SUCCESS")
+        {
+            component.set("v.inpdata",response.getReturnValue());
+        }
+    }
+    );
+        $A.enqueueAction(ac);
+},
+ selectSound : function(component, event, helper)
+{
+    var sn = component.find("inps").get("v.value");
+    component.set("v.sound",sn);
+}
+})
+
+---------------------------------------------------------
+
+17)
+
+Troubleshooting :
+Debugger :
+
+CONTROLLER :
+
+({
+    playMusic : function(component, event, helper) {
+        var selsn=component.get("v.sound");
+        var asnd = "";
+        debugger;
+        switch(selsn){
+            case "sad":
+                asnd = $A.get("$Resource.sad");  
+                component.set("v.PanicMsg","Sad-Thrombone-Music playing..");
+                console.log('Sad mp3');
+                break;
+            case "explosion":
+                asnd = $A.get("$Resource.explosion");  
+                component.set("v.PanicMsg","explosionMusic playing..");
+                console.log('explosion mp3');
+                break;
+                
+        }
+        var ad=component.find("sound").getElement();
+        ad.src=asnd;
+        
+        var dEle=component.find("disp").getElement();
+        $A.util.removeClass(dEle, "slds-hide");
+    },
+    showMsg : function(component, event, helper)
+    {
+        helper.displayMsg(component);
+    },
+    loadData : function(component, event, helper)
+    {
+        var ac=component.get("c.showSounds");
+        ac.setCallback(this,function(response)
+        {
+                       if(response.getState()=="SUCCESS")
+        {
+            component.set("v.inpdata",response.getReturnValue());
+        }
+    }
+    );
+        $A.enqueueAction(ac);
+},
+ selectSound : function(component, event, helper)
+{
+    var sn = component.find("inps").get("v.value");
+    component.set("v.sound",sn);
+}
+})
+
+------------------------------------------------------------------------
+
+18)
+Test Class :
+
+@isTest
+public class SoundControllerTest {
+    public static testMethod void showSounds_Positive(){
+        SoundObj__c s1 = new SoundObj__c(name='sad', soundURL__c='$Resource.sad');
+        SoundObj__c s2 = new SoundObj__c(name='explosion', soundURL__c='$Resource.explosion');
+        SoundObj__c s3 = new SoundObj__c(name='drums', soundURL__c='$Resource.drums');
+        List<SoundObj__c> slist = new List<SoundObj__c>{s1,s2,s3};
+        try
+        {
+            insert slist;
+        }
+        catch(System.Exception e){
+            System.debug('----'+e.getMessage());
+        }
+        Map<id,SoundObj__c> smap = new Map<id,SoundObj__c>(slist);
+        Test.startTest();
+        	List<SoundObj__c> tlist = SoundController.showSounds();
+            System.assertEquals(tlist.size(), 3);
+        Test.stopTest();
+    }
+    
+    
+}
+
+--------------------------------------------------------------------------
+
+19)
+Application :
+
+Apex Class :
+public class AccountDetailsControllers {
+@AuraEnabled
+    public static list<Account> showAccounts()
+    {
+        return [select Name,AnnualRevenue, BillingState from Account order by Name];
+    }
+}
+
+COMPONENT :
+
+<aura:component controller="AccountDetailsControllers">
+    <aura:attribute name="inpdata" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.loadData}" />
+    <div class="slds-table slds-table--bordered" style="text-align:center">        
+        
+        
+        <table class="slds-table slds-table--bordered slds-table--col-bordered">
+            <tr class="slds-table slds-table--bordered slds-text-title--caps"><th>Name</th><th>Annual Revenue</th><th>BillingState</th></tr>
+            <aura:iteration items="{!v.inpdata}" var="i">
+                <tr class="slds-table slds-table--bordered">
+                    <td >{! i.Name}</td>
+                    <td >{! i.AnnualRevenue}</td>
+                    <td >{! i.BillingState}</td>
+                </tr>
+            </aura:iteration>
+        </table>
+    </div>
+</aura:component>
+
+CONTROLLER :
+
+({
+    loadData : function(component, event, helper) {
+        var ac=component.get("c.showAccounts");
+        ac.setCallback(this,function(response)
+                       {
+                           if(response.getState()=="SUCCESS")
+                           {
+                               component.set("v.inpdata",response.getReturnValue());
+                           }
+                       }
+                      );
+        $A.enqueueAction(ac);
+    }
+    
+})
+
+-------------------------------------------------------------------------
+
+20)
+New Lightning Component Tab for Panic Button
+
+COMPONENT :
+
+<aura:component description="This component triggers alarm in case of emergency" controller="SoundController" implements="force:appHostable">
+    <aura:attribute name="PanicMsg" type="String" description="alert msg shown in component" />
+    <aura:attribute name="sound" type="String" />
+    <aura:attribute name="inpdata" type="List" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.loadData}" />
+    <div class="slds" style="text-align:center">
+        <lightning:button onclick="{!c.playMusic}" variant="destructive">
+        <div class="btnstyle"  onmouseover="{!c.showMsg}">           
+        </div>     
+        </lightning:button>
+        <ui:inputSelect change="{!c.selectSound}" aura:id="inps" class="slds-input" labelClass="slds-form-element__label" label="Select sound to play">                    
+            <aura:iteration items="{!v.inpdata}" var="i">
+                <ui:inputSelectOption label="{! i.Name}" text="{! i.Name}"></ui:inputSelectOption>
+            </aura:iteration>
+        </ui:inputSelect> 
+    </div>
+    <audio aura:id="sound"  autoplay="autoplay">       
+    </audio>
+    <div aura:id="disp">
+        {!v.PanicMsg}
+    </div>
+</aura:component>
+
+-----------------------------------------------------------------------------
+21)
+Lightning App Builder
+
+Component :
+
+<aura:component description="This component triggers alarm in case of emergency" controller="SoundController" implements="force:appHostable,flexipage:availableForAllPageTypes">
+    <aura:attribute name="PanicMsg" type="String" description="alert msg shown in component" />
+    <aura:attribute name="sound" type="String" />
+    <aura:attribute name="inpdata" type="List" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.loadData}" />
+    <div class="slds" style="text-align:center">
+        <lightning:button onclick="{!c.playMusic}" variant="destructive">
+        <div class="btnstyle"  onmouseover="{!c.showMsg}">           
+        </div>     
+        </lightning:button>
+        <ui:inputSelect change="{!c.selectSound}" aura:id="inps" class="slds-input" labelClass="slds-form-element__label" label="Select sound to play">                    
+            <aura:iteration items="{!v.inpdata}" var="i">
+                <ui:inputSelectOption label="{! i.Name}" text="{! i.Name}"></ui:inputSelectOption>
+            </aura:iteration>
+        </ui:inputSelect> 
+    </div>
+    <audio aura:id="sound"  autoplay="autoplay">       
+    </audio>
+    <div aura:id="disp">
+        {!v.PanicMsg}
+    </div>
+</aura:component>
+
+VF page : (chk the chkbox)
+
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false">
+    <span style="font-size:20px;font-style:bold;font-family:forte">
+        {!$Organization.Name}
+    </span>
+</apex:page>
+
+DESIGN :
+
+<design:component>
+    <design:attribute name="PanicMsg" label="Please enter alert caption">
+    </design:attribute>
+</design:component>
+
+------------------------------------------------------------------------------
+
+22)
+Using Lightning in VF page :
+Separate app and embed the app in vf page.. so extend lightning out.. use ltng:require coz we can only extend one thing
+Create instance of component in app
+
+
+APPLICATION :
+
+<aura:application extends="ltng:outApp">
+    <ltng:require styles="{!$Resource.sldsnew+'/assets/styles/salesforce-lightning-design-system.css'}" />
+    <aura:dependency resource="c:PanicComp" />
+</aura:application>
+
+VF Page :
+
+<apex:page >
+    <script src="/lightning/lightning.out.js">
+    </script>
+    <div id="pcomp">
+    </div>
+    <script>
+    $Lightning.use("c:PanicVfApp",
+                   function()
+                   {
+                       $Lightning.createComponent("c:PanicComp", {},"pcomp");   
+                   }
+                  );
+    </script> 
+</apex:page>
+
+Component :
+
+<aura:component description="This component triggers alarm in case of emergency" controller="SoundController" implements="force:appHostable,flexipage:availableForAllPageTypes">
+    <aura:attribute name="PanicMsg" type="String" description="alert msg shown in component" />
+    <aura:attribute name="sound" type="String" />
+    <aura:attribute name="inpdata" type="List" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.loadData}" />
+    <div class="slds" style="text-align:center">
+        <lightning:button onclick="{!c.playMusic}" variant="destructive">
+        <div class="btnstyle"  onmouseover="{!c.showMsg}">           
+        </div>     
+        </lightning:button>
+        <ui:inputSelect change="{!c.selectSound}" aura:id="inps" class="slds-input" labelClass="slds-form-element__label" label="Select sound to play">                    
+            <aura:iteration items="{!v.inpdata}" var="i">
+                <ui:inputSelectOption label="{! i.Name}" text="{! i.Name}"></ui:inputSelectOption>
+            </aura:iteration>
+        </ui:inputSelect> 
+    </div>
+    <audio aura:id="sound"  autoplay="autoplay">       
+    </audio>
+    <div aura:id="disp">
+        {!v.PanicMsg}
+    </div>
+</aura:component>
+-----------------------------------------------------------------------
+
+23)
+
+Component :
+
+<aura:component >
+	<div class="slds" style="padding-top:20px;padding-left:10px;">
+		<c:breadcrumbs labels="FirstPage,SecondPage,ThirdPage" />
+		<br/>
+		<lightning:button>
+            <lightning:icon iconName="standard:account" size="large" />
+            <B>Click here for Customer Accounts</B>
+        </lightning:button>
+		<lightning:buttonIcon  iconName="utility:add" size="large" alternativeText="Account Icon">	
+        </lightning:buttonIcon>
+		<lightning:button label="Hello user" iconName="utility:adduser" iconPosition="right">
+        </lightning:button>
+    </div>
+</aura:component>
+
+
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:NavDemo />
+</aura:application>
+
+--------------------------------------------------------------------
+
+24) 
+Creation of tab layout and button
+
+SLDX component
+
+Component :
+
+<aura:component >
+    <div class="slds" style="padding-top:20px;padding-left:10px;">
+        <c:tabs type="scoped">
+            <c:tab title="tab1">Content of tab1</c:tab>
+            <c:tab title="tab2">Content of tab2</c:tab>
+            <c:tab title="tab3">Content of tab3</c:tab>
+            <c:tab title="tab4">Content of tab4</c:tab>
+        </c:tabs>
+		<lightning:tabset variant="scoped">
+            <lightning:tab>
+                <aura:set attribute="label">
+                    <lightning:icon iconName="utility:add" />
+                    Tab 1
+                </aura:set>
+                Content of Tab 1
+            </lightning:tab>
+            <lightning:tab>
+                <aura:set attribute="label">
+                    <lightning:icon iconName="utility:announcement" />
+                    Tab 2
+                </aura:set>
+                Content of Tab 2
+            </lightning:tab>
+        </lightning:tabset>
+		<lightning:buttonGroup>
+            <lightning:button label="button" variant="brand"></lightning:button>
+            <lightning:button label="button" variant="inverse"></lightning:button>
+            <lightning:button label="button" variant="neutral"></lightning:button>
+            <lightning:button label="button" variant="destructive"></lightning:button>
+        </lightning:buttonGroup>
+    </div>
+</aura:component>
+
+
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:NavDemo />
+</aura:application>
+
+-----------------------------------------------------------------------------
+
+25)
+CASESTUDY :
+
+Component :
+
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <div class="slds" style="padding-top:10px;padding-left:10px;">
+	<c:tabs>
+    	<c:tab title="Schedule">
+        	Page under progress
+        </c:tab>
+        <c:tab title="Students">
+        	Page under progress
+        </c:tab>
+        <c:tab title="Locations">
+        	Page under progress
+        </c:tab>
+        <c:tab title="Reports">
+        	Page under progress
+        </c:tab>
+        <c:tab title="Panic">
+            <c:CallMeComp />
+        </c:tab>
+    </c:tabs>
+    </div>
+</aura:component>
+
+APPLICATION :
+
+<aura:application extends="force:slds">
+    <c:CertificateComp />
+</aura:application>
+
+Style :
+zip file
+
+---------------------------------------------------------------------
+
+26)
+
+Panic App MAin Page with toggle fuctionality:
+
+
+Component -
+
+<aura:component >
+    <div class="slds">
+        <div class="slds-align--absolute-center" style="background:grey;height:100px;text-align:center;margin:auto">
+            <lightning:buttonGroup>
+                <lightning:button label="Dial HQ" iconName="utility:call" variant="neutral" onclick="{!c.showtab1}"> </lightning:button>
+                <lightning:button label="Sound Effects" iconName="utility:announcement" variant="brand" onclick="{!c.showtab2}"> </lightning:button>
+            </lightning:buttonGroup>
+        </div>
+        <div class="cardContainer">
+        	<div aura:id="tab1" class="card card--off">
+                <c:CallMeComp />
+            </div>
+            <div aura:id="tab2" class="card card--off">
+            	<c:PanicComp />
+            </div>
+        </div>
+    </div>
+</aura:component>
+
+In Certifiacte Comp :
+
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <div class="slds" style="padding-top:10px;padding-left:10px;">
+	<c:tabs>
+    	<c:tab title="Schedule">
+        	Page under progress
+        </c:tab>
+        <c:tab title="Students">
+        	Page under progress
+        </c:tab>
+        <c:tab title="Locations">
+        	Page under progress
+        </c:tab>
+        <c:tab title="Reports">
+        	Page under progress
+        </c:tab>
+        <c:tab title="Panic">
+            <c:PanicHome />
+        </c:tab>
+    </c:tabs>
+    </div>
+</aura:component>
+
+CONTROLLER :
+
+({
+	showtab1 : function(component, event, helper) {
+		var t1= component.find("tab1").getElement();
+        var t2= component.find("tab2").getElement();
+        $A.util.removeClass(t1,"card--off");
+        $A.util.addClass(t2,"card--off");
+	},
+    showtab2 : function(component, event, helper) {
+		var t1= component.find("tab1").getElement();
+        var t2= component.find("tab2").getElement();
+        $A.util.addClass(t1,"card--off");
+        $A.util.removeClass(t2,"card--off");
+	}
+})
+
+Style :
+css file - panic tools
+line 21 relative
+
+Application :
+
+<aura:application extends="force:slds">
+    <c:CertificateComp />
+</aura:application>
+
+-----------------------------------------------------------------------------
+
+27)
+
+GRID
+
+Component :
+<aura:component >
+	<div class="slds" style="padding-top:10px;">
+    	<div class="slds-grid slds-grid--frame slds-grid--align-space" >
+        	<div class="slds-col" style="border:2px solid blue">
+                Hiiiii
+            </div>
+            <div class="slds-col" style="border:2px solid blue">
+                Hellooo
+            </div>
+            <div class="slds-col" style="border:2px solid blue">
+                Watsuuppp
+            </div>
+        </div>
+    </div>
+</aura:component>
+-----------------------------------------------------------------------
+
+28)
+
+Report app :
+
+componenet :
+
+<aura:component >
+	<div class="slds">
+    	<div class="slds-grid slds-grid-align--space" style="background:lightgrey">
+        	<div class="slds-col sld-size--1-of-12">
+            	<lightning:button iconName="utility:back" variant="brand"></lightning:button>
+            </div>
+            <div class="slds-col sld-size--10-of-12" style="text-align:center">
+            	<span style="font-size:20px;font-style:bold">Trip Reports</span>
+            </div>
+            <div class="slds-col sld-size--1-of-12" style="text-align:right">
+            	<lightning:button iconName="utility:add" variant="brand"></lightning:button>
+            </div>
+        </div>
+    </div>
+</aura:component>
+
+
+
+---------------------------------------------------------------
+
+29)
+
+Student app with Responsive Menu :
+
+comment tab css in certificateComp.css
+Component :
+
+<aura:component >
+	<div class="slds">
+        <div class="slds-grid">
+        	<div class="slds-col slds-size--11-of-12" style="text-align:center">
+            	<span style="font-size:20px;font-style:bold">Students</span>
+            </div>
+            <div class="slds-col slds-size--1-of-12" style="text-align:center" >
+            	<lightning:buttonMenu iconName="utility:threedots" iconSize="large" menuAlignment="right" onselect="{!c.selectAction}">
+                    <lightning:menuItem label="Create" value="0" /> 
+                    <lightning:menuItem label="Update" value="1" /> 
+                    <lightning:menuItem label="Delete" value="2" /> 
+                    <lightning:menuItem label="Display" value="3" /> 
+                </lightning:buttonMenu>
+            </div>
+        </div>
+    </div>
+</aura:component>
+
+
+Controller :
+
+({
+	selectAction : function(component, event, helper) {
+		var selVal=event.detail.menuItem.get("v.label");
+        alert("You have clicked---"+selVal);
+	}
+})
+
+-------------------------------------------------------------------
+
+30)
+
+Dialog Box :
+
+Component :
+
+<aura:component>
+    <aura:attribute name="dtitle" type="String" default="Welcome to Certification App" />
+    <div class="slds">
+        <div>
+            <div class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container" >
+                    <div style="text-align:right" onclick="{!c.closeContainer}">
+                        <lightning:icon iconName="utility:close" size="small" alternativeText="Indicates approval"/>
+                    </div>
+                    <div class="slds-modal__header">
+                        {!v.dtitle}
+                    </div>
+                    <div class="slds-modal__content" style="text-align:center">
+                        {!v.body}
+						<br/><br/>
+                        <c:AccComp />
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning:button label="Close" variant="brand" iconName="utility:close" onclick="{!c.closeDialog}"></lightning:button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </div>
+</aura:component>
+
+Controller :
+
+({
+	closeDialog : function(component, event, helper) {
+		$A.util.addClass(component,"slds-hide");
+	},
+    closeContainer : function(component, event, helper) {
+        $A.util.addClass(component,"slds-hide");
+    }
+})
+
+CertificateComp :
+
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <div class="slds" style="padding-top:10px;padding-left:10px;">
+	<c:tabs >
+    	<c:tab title="Schedule">
+        	Page under progress
+        </c:tab>
+        <c:tab title="Students">
+        	<c:StudentComp />
+        </c:tab>
+        <c:tab title="Locations">
+        	Page under progress
+        </c:tab>
+        <c:tab title="Reports">
+        	<c:ReportComp />
+        </c:tab>
+        <c:tab title="Panic">
+            <c:PanicHome />
+        </c:tab>
+    </c:tabs>
+    </div>
+    <c:WelcomeDialog>
+        This is Lightning App developed for AW Computing HR Team..!!
+    </c:WelcomeDialog>
+</aura:component>
+
+-------------------------------------------------------------------------------------
+
+30)
+Dynamically Adding new component :
+
+COMPONENT :
+
+<aura:component >
+    <aura:attribute name="bn" type="Integer" default="1" />
+	<div class="slds" style="padding-top:20px;padding-left:10px:">
+    	<lightning:button label="Create" iconName="utility:add" iconPosition="right" onclick="{!c.addBtn}"></lightning:button>
+        <lightning:button label="Remove" iconName="utility:close" iconPosition="right" onclick="{!c.delBtn}"></lightning:button>
+        <br/><br/>
+        <div style="margin:auto;border:10px solid blue;height:300px;width:300px;">
+        	{!v.body}
+        </div>
+    </div>
+</aura:component>
+
+CONTROLLER :
+
+({
+	addBtn : function(component, event, helper) {
+        var btnl=component.get("v.bn");
+		$A.createComponent(
+            "lightning:button",
+            {
+                label:"New Button "+btnl
+            },
+            function(bt)
+            {
+                var cbdy=component.get("v.body");
+                cbdy.push(bt);
+                component.set("v.body",cbdy);
+            }
+        );
+        btnl++;
+        component.set("v.bn",btnl);
+	},
+    delBtn : function(component, event, helper) {
+		component.set("v.body",[]);
+        component.set("v.bn",1);
+	}
+})
+
+-----------------------------------------------------------------------
+
+31)
+Adding Internationalization :
+
+COMPONENT :
+
+
+<aura:component >
+    <aura:attribute name="dtitle" type="String" default="Welcome to Certification App" />
+    <div class="slds">
+        <div>
+            <div class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container" >
+                    <div style="text-align:right" onclick="{!c.closeDialog}">
+                        <lightning:icon iconName="utility:close" size="small" alternativeText="Indicates approval"/>
+                    </div>
+                    <div class="slds-modal__header">
+                        {!v.dtitle}
+                    </div>
+                    <div class="slds-modal__content" style="text-align:center">
+                        <span style="font-size:20px;color:blue">
+                        	{!$Label.c.greeting}
+                        </span>
+                        {!v.body}
+                        <br/><br/>
+                        <c:AccComp />
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning:button label="Close" variant="brand" iconName="utility:close" onclick="{!c.closeDialog}"></lightning:button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </div>
+</aura:component>
+
+---------------------------------------------------------------------------
+
+32)
+
+For adding location to App
+
+Component :
+
+<aura:component >
+    <aura:attribute name="cdate" type="Date" />
+    <aura:handler name="init" value="{!this}" action="{!c.loadInfo}" />
+	<div class="slds" style="padding-top:20px;padding-left:10px">
+    	<div style="width:500px;height:500px;border:3px solid blue;marging:auto">
+        	<table class="slds-table slds-table--bordered">
+            	<tr >
+                	<th colspan="2" style="font-weight:bold;font-size:30px">Locale data of App</th>
+                </tr>
+                <tbody>
+                	<tr>
+                    	<td style="font-weight:bold">Language</td>
+                        <td>{!$Locale.language}</td>
+                    </tr>
+                    <tr>
+                    	<td style="font-weight:bold">Currency</td>
+                        <td>{!$Locale.currency}</td>
+                    </tr>
+                    <tr>
+                    	<td style="font-weight:bold">TimeZone</td>
+                        <td>{!$Locale.timezone}</td>
+                    </tr>
+                    <tr>
+                    	<td style="font-weight:bold">Country</td>
+                        <td>{!$Locale.country}</td>
+                    </tr>
+                    <tr>
+                    	<td onclick="{!c.displayDate}" style="font-weight:bold">DateTime</td>
+                        <td>{!v.cdate}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</aura:component>
+
+Controller :
+
+({
+	displayDate : function(component, event, helper) {
+		component.set("v.cdate",$A.localizationService.formatDate(new Date(),'DD/MM/YYYY'));
+	},
+    loadInfo : function(component, event, helper) {
+		component.set("v.cdate",new Date());
+	}
+})
+
+-------------------------------------------------------------------------------------
+
+33)
+
+Accessing child componenets :
+
+Child Component : studentRecord
+for access in other components access=GLOBAL
+
+<aura:component >
+    <aura:attribute name="cname" type="String" access="GLOBAL" />
+    <aura:attribute name="cemail" type="String" access="GLOBAL" />
+    <aura:attribute name="cphone" type="String" access="GLOBAL" />
+</aura:component>
+
+
+Parent Component : studentData
+<aura:component >
+    <aura:attribute name="clist" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.showRecords}" />
+    {!v.body}
+    <div class="slds" style="padding-top:20px;padding-left:10px">
+        <table class="slds-table slds-table--bordered">
+            <thead>  
+                <tr>
+                    <th  style="font-weight:bold">Student Name</th>
+                    <th  style="font-weight:bold">Student Email</th>
+                    <th  style="font-weight:bold">Student Ph. No.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.clist}" var="c">
+                    <tr>
+                        <td>{!c.sname}</td>
+                        <td>{!c.semail}</td>
+                        <td>{!c.sphone}</td>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+</aura:component>
+
+
+StudentDataController :
+
+({
+	showRecords : function(component, event, helper) {
+		var carr=[];
+        var cbdy=component.get("v.body");
+        var crec="";
+        for(var i=0;i<cbdy.length;i++)
+        {
+            crec=cbdy[i];
+            var rdata={
+                "sname":crec.get("v.cname"),
+                "semail":crec.get("v.cemail"),
+                "sphone":crec.get("v.cphone")
+            };
+            carr.push(rdata);
+        }
+        component.set("v.clist",carr);
+	}
+})
+
+StudentComp :
+Component :
+
+<aura:component >
+    <div class="slds">
+        <div class="slds-grid" style="background:lightgrey">
+            <div class="slds-col slds-size--11-of-12" style="text-align:center">
+                <span style="font-size:20px;font-style:bold">Students</span>
+            </div>
+            <div class="slds-col slds-size--1-of-12" style="text-align:center" >
+                <lightning:buttonMenu iconName="utility:threedots" iconSize="large" menuAlignment="right" onselect="{!c.selectAction}" variant="border-filled">
+                    <lightning:menuItem label="Create" value="0" /> 
+                    <lightning:menuItem label="Update" value="1" /> 
+                    <lightning:menuItem label="Delete" value="2" /> 
+                    <lightning:menuItem label="Display" value="3" /> 
+                </lightning:buttonMenu>
+            </div>
+        </div>
+        <c:StudentData >
+        	<c:StudentRecord cname="Malvika" cemail="malvi@gmail.com" cphone="1234"></c:StudentRecord>
+            <c:StudentRecord cname="Nikita" cemail="niki@gmail.com" cphone="5678"></c:StudentRecord>
+            <c:StudentRecord cname="Nilima" cemail="nilima@gmail.com" cphone="91011"></c:StudentRecord>
+        </c:StudentData>
+    </div>
+</aura:component>
+
+-----------------------------------------------------------------------------------
+
+34)
+Dynamic data taking from contacts :
+
+StudentRecord Component :
+
+<aura:component >
+    <aura:attribute name="cname" type="String" access="GLOBAL" />
+    <aura:attribute name="cemail" type="String" access="GLOBAL" />
+    <aura:attribute name="cphone" type="String" access="GLOBAL" />
+</aura:component>
+
+StudentData Component :
+
+<aura:component controller="StudentController">
+    <aura:attribute name="clist" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.loadInfo}" />
+    {!v.body}
+    <div class="slds" style="padding-top:20px;padding-left:10px">
+        <table class="slds-table slds-table--bordered">
+            <thead>  
+                <tr>
+                    <th  style="font-weight:bold">Student Name</th>
+                    <th  style="font-weight:bold">Student Email</th>
+                    <th  style="font-weight:bold">Student Ph. No.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.clist}" var="c">
+                    <tr>
+                        <td>{!c.LastName}</td>
+                        <td>{!c.Email}</td>
+                        <td>{!c.Phone}</td>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+</aura:component>
+
+StudentData Controller :
+
+({
+    loadInfo: function(component, event, helper) {
+        var act=component.get("c.showStudentList");
+        act.setCallback(this,function(response)
+                        {
+                        if(response.getState() == 'SUCCESS')
+        {
+            component.set("v.clist",response.getReturnValue());
+        }
+    }
+    );
+    $A.enqueueAction(act);
+}
+})
+
+StudentController : (Apex Class)
+ 
+public class StudentController {
+@AuraEnabled
+    public static List<Contact> showStudentList()
+    {
+        return [Select LastName, email, phone from Contact order by LastName];
+    }
+}
+
+StudentComp Component :
+
+<aura:component >
+    <div class="slds">
+        <div class="slds-grid" style="background:lightgrey">
+            <div class="slds-col slds-size--11-of-12" style="text-align:center">
+                <span style="font-size:20px;font-style:bold">Students</span>
+            </div>
+            <div class="slds-col slds-size--1-of-12" style="text-align:center" >
+                <lightning:buttonMenu iconName="utility:threedots" iconSize="large" menuAlignment="right" onselect="{!c.selectAction}" variant="border-filled">
+                    <lightning:menuItem label="Create" value="0" /> 
+                    <lightning:menuItem label="Update" value="1" /> 
+                    <lightning:menuItem label="Delete" value="2" /> 
+                    <lightning:menuItem label="Display" value="3" /> 
+                </lightning:buttonMenu>
+            </div>
+        </div>
+        <c:StudentData >
+        </c:StudentData>
+    </div>
+</aura:component>
+
+StudentCompController :
+
+({
+    selectAction : function(component, event, helper) {
+        var selVal=event.detail.menuItem.get("v.label");
+        alert("You have clicked---"+selVal);
+    }
+ })
+ 
+ -----------------------------------------------------------------------------------------
+ 
+ 35)
+ 
+ Student data onclick of menu
+ 
+ Component :
+ 
+ <aura:component controller="StudentController">
+    <div class="slds">
+        <div class="slds-grid" style="background:lightgrey">
+            <div class="slds-col slds-size--11-of-12" style="text-align:center">
+                <span style="font-size:20px;font-style:bold">Students</span>
+            </div>
+            <div class="slds-col slds-size--1-of-12" style="text-align:center" >
+                <lightning:buttonMenu iconName="utility:threedots" iconSize="large" menuAlignment="right" onselect="{!c.selectAction}" variant="border-filled">
+                    <lightning:menuItem label="Create" value="0" /> 
+                    <lightning:menuItem label="Update" value="1" /> 
+                    <lightning:menuItem label="Delete" value="2" /> 
+                    <lightning:menuItem label="Display" value="3" /> 
+                </lightning:buttonMenu>
+            </div>
+        </div>
+        {!v.body}
+    </div>
+</aura:component>
+ 
+ Controller :
+ 
+ ({
+    selectAction : function(component, event, helper) {
+        var selVal=event.detail.menuItem.get("v.value");
+        component.set("v.body",[]);
+        if (selVal==0)
+        {
+            alert("Under Development");
+        }
+        if (selVal==1)
+        {
+            alert("Under Development");
+        }
+        if (selVal==2)
+        {
+            alert("Under Development");
+        }
+        if (selVal==3)
+        {
+            $A.createComponent(
+                "c:StudentData",
+                {},
+                function(cs)
+                {
+                    var sbody=component.get("v.body");
+                    sbody.push(cs);
+                    component.set("v.body",sbody);
+                }
+            );
+        }
+        
+    }
+ })
+ 
+ 
+ ----------------------------------------------------------------------
+ 
+ 36)
+ Raising Events
+ 
+ Component Event :
+ 
+ Event :
+ 
+ <aura:event type="COMPONENT" description="Event template" >
+    <aura:attribute name="cmsg" type="String" />
+</aura:event>
+
+Component 1 : (childcomp)
+
+<aura:component >
+    <aura:registerEvent name="cmpevent" type="c:CompEvent"/>
+	<div class="slds">
+    	<div style="background:yellow;height:200px;width:200px;">
+        	<lightning:button label="Fire Event" onclick="{!c.sendMsg}" ></lightning:button>
+        </div>
+    </div>
+</aura:component>
+
+Component 1 controller :
+
+({
+	sendMsg : function(component, event, helper) {
+		var ev=component.getEvent("cmpevent");
+        ev.setParams(
+            {
+                "cmsg":"Hello msg from Child Comp.."
+            }
+        );
+        ev.fire();
+	}
+})
+
+
+Component 2 : (Parent component)
+
+<aura:component >
+    <aura:attribute name="edata" type="String" /> 
+	<aura:handler name="cmpevent" event="c:CompEvent" action="{!c.dispMsg}"/>
+	<div class="slds">
+    	<div style="background:lightgrey;height:400px;width:400px;">
+            <c:ChildComp />
+            <br/>
+            <br/>
+            {!v.edata}
+        </div>
+    </div>
+</aura:component>
+
+Component 2 controller :
+
+({
+	dispMsg : function(component, event, helper) {
+		var ms=event.getParam("cmsg");
+        component.set("v.edata",ms);
+	}
+})
+
+--------------------------------------------------------------------
+
+37)
+
+Application Event  :
+
+Event : (AppEvent)
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="appmsg" type="String" />
+</aura:event>
+
+Comp1 : (COMPONENT)
+
+<aura:component >
+	<div class="slds">
+    	<div style="background:aqua;height:200px">
+            <lightning:button label="Broadcast Msg" onclick="{!c.brMsg}" />
+        </div>
+    </div>
+</aura:component>
+
+Comp1 : (CONTROLLER)
+
+({
+	brMsg : function(component, event, helper) {
+        var ev=$A.get("e.c:AppEvent");
+        ev.setParams({"appmsg":"Broadcasted message..."});
+        ev.fire();
+	}
+})
+
+
+Comp2 : (COMPONENT)
+
+<aura:component >
+    <aura:attribute name="bmsg" type="String" />
+    <aura:handler event="c:AppEvent" action="{!c.showMsg}" />
+	<div class="slds">
+    	<div style="background:yellow;height:200px">
+            {!v.bmsg}
+        </div>
+    </div>
+</aura:component>
+
+Comp2 : (CONTROLLER)
+
+({
+	showMsg : function(component, event, helper) {
+		component.set("v.bmsg",event.getParam("appmsg"));
+	}
+})
+
+
+-----------------------------------------------------------------------------
+
+38)
+Student record creation using events :
+
+Event :
+
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="stdmsg" type="String" />
+	<aura:attribute name="stdid" type="String" />
+</aura:event>
+
+APEX CLASS :
+
+public class StudentController {
+	@AuraEnabled
+    public static List<Contact> showStudentList()
+    {
+        return [Select LastName, email, phone from Contact order by LastName];
+    }
+    
+    
+    @AuraEnabled
+    public static  list<String> insertStudent(String sname,String semail,String sphone)
+    {
+        list<String> stdmsg = new list<String>();
+        Contact cn = new Contact(LastName=sname,Email=semail,Phone=sphone);
+        try
+        {
+            insert cn;
+            stdmsg.add('Record Successfully Loaded');
+            stdmsg.add(cn.id);
+        }
+        catch(System.DmlException de)
+        {
+            stdmsg.add(de.getMessage());
+            
+        }
+        return stdmsg;
+    }
+}
+
+
+COMPONENT 1 : (StudentForm)
+
+<aura:component controller="StudentController">
+    <aura:attribute name="stname" type="String" />
+    <aura:attribute name="stemail" type="String" />
+    <aura:attribute name="stphone" type="String" />
+	<div class="slds">
+    	<div class="slds-form">
+            <div class="slds-form-element">
+                <ui:inputText value="{!v.stname}" class="slds-input" label="Enter Student Name" labelClass="slds-form-element__label" />
+                <ui:inputText value="{!v.stemail}" class="slds-input" label="Enter Student Email" labelClass="slds-form-element__label" />
+                <ui:inputText value="{!v.stphone}" class="slds-input" label="Enter Student Phone" labelClass="slds-form-element__label" />
+                <lightning:button label="Submit" variant="brand" onclick="{!c.loadData}"/>
+            </div>
+        </div>
+    </div>
+</aura:component>
+
+
+CONTROLLER 1:  (StudentForm)
+
+({
+	loadData : function(component, event, helper) {
+		var cn=component.get("v.stname");
+        var ce=component.get("v.stemail");
+        var cp=component.get("v.stphone");
+        var ac=component.get("c.insertStudent");
+        ac.setParams({"sname":cn,"semail":ce,"sphone":cp});
+        ac.setCallback(this,function(response)
+                       {
+                           if(response.getState()=='SUCCESS')
+                           {
+                               var cr=response.getReturnValue();
+                               var ev=$A.get("e.c:StudentEvent");
+                               ev.setParams({"stdmsg":cr[0],"stdid":cr[1]});
+                               ev.fire();
+                           }
+                       }
+                      );
+	}
+})
+
+
+
+COMPONENT 2 : (StudentMsg)
+
+<aura:component >
+	<aura:attribute name="smsg" type="String" />
+    <aura:attribute name="stid" type="String" />
+    <aura:handler event="c:StudentEvent" action="{!c.displayMsg}" />
+    <div>
+        <span style="font-size:20px;font-style:bold">
+            {!v.smsg}<br/>
+            {!v.stid}
+        </span>
+    </div>
+</aura:component>
+
+CONTROLLER 2 :(StudentMsg)
+
+({
+	displayMsg : function(component, event, helper) {
+		component.set("v.smsg",event.getParam("stdmsg"));
+        component.set("v.stid",event.getParam("stdid"));
+	}
+})
+
+
+COMPONENT 3 : (StudentPage)
+
+<aura:component >
+	<div class="slds">
+    	<div class="slds-box">
+            <c:StudentForm />
+        </div>
+        <div class="slds-box">
+            <c:StudentMsg />
+        </div>
+    </div>
+</aura:component>
+
+
+StudentCompController :
+
+
+({
+    selectAction : function(component, event, helper) {
+        var selVal=event.detail.menuItem.get("v.value");
+        component.set("v.body",[]);
+        if (selVal==0)
+        {
+            $A.createComponent(
+                "c:StudentPage",
+                {},
+                function(sp)
+                {
+                    var cbdy=component.get("v.body");
+                    cbdy.push(sp);
+                    component.set("v.body",cbdy);
+                }
+            );
+        }
+        if (selVal==1)
+        {
+            alert("Under Development");
+        }
+        if (selVal==2)
+        {
+            alert("Under Development");
+        }
+        if (selVal==3)
+        {
+            $A.createComponent(
+                "c:StudentData",
+                {},
+                function(cs)
+                {
+                    var sbody=component.get("v.body");
+                    sbody.push(cs);
+                    component.set("v.body",sbody);
+                }
+            );
+        }
+        
+    }
+ })
+ 
+ 
+ -------------------------------------------------------------------------------
+ 
+ 
+ 39) 
+ 
+Raising Salesforce1 Event 
+
+create a form :
+
+COMPONENT :
+
+<aura:component controller="StudentController" implements="force:appHostable">
+    <aura:attribute name="stname" type="String" />
+    <aura:attribute name="stemail" type="String" />
+    <aura:attribute name="stphone" type="String" />
+    <div class="slds">
+        <form>
+            <lightning:input label="Student Name" name="sname" value="{!v.stname}"/> 
+            <lightning:input label="Student Email" type="email" name="semail" value="{!v.stemail}"/>
+            <lightning:input label="Student Phone" type="tel" name="sphone" value="{!v.stphone}"/>
+            <lightning:button label="Submit" variant="brand" onclick="{!c.submitstd}"/>
+        </form>
+    </div>
+</aura:component>
+
+
+Controller :
+
+({
+	submitstd : function(component, event, helper) {
+		var sn=component.get("v.stname");
+        var se=component.get("v.stemail");
+        var sp=component.get("v.stphone");
+        var ac=component.get("c.insertStudent");
+        ac.setParams({"sname":sn,"semail":se,"sphone":sp});
+        ac.setCallback(this,function(response){
+                     if(response.getState()=='SUCCESS') 
+                      {
+                          var ar=response.getReturnValue();
+                          var toastev=$A.get("event.force:showToast");
+                          toastev.setParams(
+                              {"title":ar[0],
+                              "message":ar[1]
+                              }
+                          );
+                          toastev.fire();
+                      }
+                      });
+        $A.enqueueAction(ac);
+	}
+})
+
+-------------------------------------------------------------
+
+40)
+
+Renderer :
+
+EVENT :
+
+<aura:event type="COMPONENT" description="Event template" >
+    <aura:attribute name="stmsg" type="List" />
+</aura:event>
+
+StudentData Component :
+
+<aura:component controller="StudentController">
+    <aura:attribute name="clist" type="List" />
+    <aura:registerEvent name="stevent" type="c:pageEvent" />
+    <aura:handler name="init" value="{!this}" action="{!c.loadInfo}" />    
+    {!v.body}
+    <div class="slds" style="padding-top:20px;padding-left:10px">
+        <table class="slds-table slds-table--bordered">
+            <thead>  
+                <tr>
+                    <th  style="font-weight:bold">Student Name</th>
+                    <th  style="font-weight:bold">Student Email</th>
+                    <th  style="font-weight:bold">Student Ph. No.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.clist}" var="c">
+                    <tr>
+                        <td>{!c.LastName}</td>
+                        <td>{!c.Email}</td>
+                        <td>{!c.Phone}</td>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+</aura:component>
+
+Controller :
+
+({
+    loadInfo: function(component, event, helper) {
+        component.set("v.body",[]);
+        var act=component.get("c.showStudentList");
+        act.setCallback(this,function(response)
+                        {
+                        if(response.getState() == 'SUCCESS')
+        {
+            component.set("v.clist",response.getReturnValue());
+        }
+    }
+    );
+    $A.enqueueAction(act);
+	 var ev=component.getEvent("stevent");
+        ev.setParams({"stmsg":component.get("v.clist")});
+        ev.fire();
+}
+})
+
+
+StudentComp :
+
+<aura:component controller="StudentController">
+    <div class="slds">
+        <div class="slds-grid" style="background:lightgrey">
+            <div class="slds-col slds-size--11-of-12" style="text-align:center">
+                <span style="font-size:20px;font-style:bold">Students</span>
+            </div>
+            <div class="slds-col slds-size--1-of-12" style="text-align:center" >
+                <lightning:buttonMenu iconName="utility:threedots" iconSize="large" menuAlignment="right" onselect="{!c.selectAction}" variant="border-filled">
+                    <lightning:menuItem label="Create" value="0" /> 
+                    <lightning:menuItem label="Update" value="1" /> 
+                    <lightning:menuItem label="Delete" value="2" /> 
+                    <lightning:menuItem label="Display" value="3" /> 
+                </lightning:buttonMenu>
+            </div>
+        </div>
+        <div aura:id="bodysec">
+            {!v.body}
+        </div>
+    </div>
+</aura:component>
+
+
+Renderer for StudentComp :
+
+({
+    afterrender :function(component, event, helper)
+    {
+        super.afterRender();
+        var tarcmp=component.find("bodysec").getElement();
+        tarcmp.addEventListener(
+        "touchmove",
+            function()
+            {
+                event.stopPropogation();
+            },
+            false
+        );
+    }
+})
+
+---------------------------------------------------------------------------------------
+
+
+41)
+
+Browser Specific welcome dialog msg :
+
+CertificateComp :
+
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.loadMainApp}" />
+    <div class="slds" style="padding-top:10px;padding-left:10px;">        
+	<c:tabs >
+    	<c:tab title="Schedule">
+        	Page under progress
+        </c:tab>
+        <c:tab title="Students">
+        	<c:StudentComp />
+        </c:tab>
+        <c:tab title="Locations">
+        	<c:LocalComp />
+        </c:tab>
+        <c:tab title="Reports">
+        	<c:ReportComp />
+        </c:tab>
+        <c:tab title="Panic">
+            <c:PanicHome />
+        </c:tab>
+    </c:tabs>
+	 {!v.body}
+    </div>
+</aura:component>
+
+CertificateCompController :
+
+({
+	loadMainApp : function(component, event, helper) {
+		var dtype=$A.get("$Browser.formFactor");
+        if(dtype=="DESKTOP")
+        {
+            $A.createComponent(
+                "c:WelcomeDialog",
+                {
+                    "dtitle":"Welcome to Certification App--DESKTOP VERSION"
+                },
+                function(wd)
+                {
+                    var cb=component.get("v.body");
+                    cb.push(wd);
+                    component.set("v.body",cb);
+                }
+            );
+        }
+        if(dtype=="PHONE")
+        {
+            $A.createComponent(
+                "c:WelcomeDialog",
+                {
+                    "dtitle":"Welcome to Certification App--PHONE VERSION"
+                },
+                function(wd)
+                {
+                    var cb=component.get("v.body");
+                    cb.push(wd);
+                    component.set("v.body",cb);
+                }
+            );
+        }
+	}
+})
+
+--------------------------------------------------------------
+
+42)
+
+Inheritance :
+
+** While calling in app, call DetailComp
+
+MasterComp Component :
+
+
+<aura:component extensible="true">
+    <aura:attribute name="msg" type="String" default="Welcome to White House"/>
+    <div class="slds">
+        <div style="width:500px;height:500px;border:2px solid blue;" class="slds-align--absolute-center">
+            {!v.msg}<br/>
+             {!v.fname} {!v.lname}
+        </div>
+    </div>
+</aura:component>
+
+
+DetailComp Component :
+
+<aura:component extends="c:MasterComp">
+	<aura:attribute name="fname" type="String" default="Donald" access="GLOBAL" />
+    <aura:attribute name="lname" type="String" default="Trump" access="GLOBAL" />
+</aura:component>
+
+----------------------------------------------------------------------
+
+43)
+
+Unit -6 
+
+DataForm Component 
+
+<aura:component  implements="force:appHostable">
+	<div class="slds" style="padding-top:20px;padding-left:10px;">
+        <lightning:input name="ename" label="Enter Name" placeholder="Enter Full Name" minLength="3" maxLength="30" />
+        <lightning:input name="epass" type="password" label="Enter Password" minLength="5" maxLength="10" />
+        <lightning:input name="ephone" type="tel" label="Enter Phone No."  />
+        <lightning:input name="email" type="email" label="Enter Email Address "  />
+        <ui:inputCurrency label="Enter Basic Pay " class="slds-input"  labelClass="slds-form-element__label" />
+        <lightning:input name="jd" type="date" label="Enter Joining Date "  />
+        <ui:inputTextarea label="Enter Address " class="slds-input"  labelClass="slds-form-element__label" />
+        <ui:inputRichText label="Add Resume " class="slds-input"  labelClass="slds-form-element__label" />
+        <lightning:select name="cb" label="Select City " >
+        	<option value="1">Hyderabad</option>
+            <option value="2">Bangalore</option>
+            <option value="3">Udaipur</option>
+        </lightning:select>
+        <lightning:input name="chb" label="Employed ?" type="checkbox" />
+        <lightning:input name="rb" label="Male" type="radio" />
+        <lightning:input name="rb" label="Female" type="radio" />
+        <lightning:input name="tb" label="Status ?" type="toggle" />
+        <lightning:button name="bn" variant="brand" >
+            <lightning:icon iconName="action:submit_for_approval" size="small" />
+            <B>Submit</B>
+        </lightning:button>
+    </div>
+</aura:component>
+
+
+----------------------------------------------------------------------
+
+44)
+
+Adding Validations : (UI and Lightning)
+
+DataForm Component  :
+
+<aura:component  implements="force:appHostable">
+    <div class="slds" style="padding-top:20px;padding-left:10px;">
+        <lightning:input name="ename" label="Enter Name" placeholder="Enter Full Name" minlength="3" maxlength="30" messageWhenBadInput="Please enter minimum of 3 characters" />
+        <lightning:input name="epass" type="password" label="Enter Password" minlength="5" maxlength="10" required="true" messageWhenValueMissing="Password is Required!!!" />
+        <lightning:input name="ephone" type="tel" label="Enter Phone No."  />
+        <lightning:input name="email" type="email" label="Enter Email Address "  />
+        <lightning:input name="epay" type="number" label="Expected Pay" formatter="currency" />
+        <ui:inputCurrency label="Enter Basic Pay " class="slds-input"  labelClass="slds-form-element__label" />
+        <lightning:input name="jd" type="date" label="Enter Joining Date "  />
+        <ui:inputTextarea label="Enter Address " class="slds-input"  labelClass="slds-form-element__label" updateOn="keyup" keyup="{!c.checkField}" />
+        <ui:inputRichText label="Add Resume " class="slds-input"  labelClass="slds-form-element__label" />
+        <lightning:select name="cb" label="Select City " >
+            <option value="1">Hyderabad</option>
+            <option value="2">Bangalore</option>
+            <option value="3">Udaipur</option>
+        </lightning:select>
+        <lightning:input name="chb" label="Employed ?" type="checkbox" />
+        <lightning:input name="rb" label="Male" type="radio" />
+        <lightning:input name="rb" label="Female" type="radio" />
+        <lightning:input name="tb" label="Status ?" type="toggle" />
+        <lightning:button name="bn" variant="brand" >
+            <lightning:icon iconName="action:submit_for_approval" size="small" />
+            <B>Submit</B>
+        </lightning:button>
+    </div>
+</aura:component>
+
+
+DataForm Controller :
+
+({
+	checkField : function(component, event, helper) {
+		var ip=event.getSource();
+        if(ip.get("v.value").length==0)
+        {
+            ip.set("v.errors",[{"message":"Field cannot be empty!!"}]);
+        }
+        else
+        {
+            ip.set("v.errors",[]);
+        }
+	}
+})
+
+---------------------------------------------------------
+
+45)
+
+Query By Example :
+SEARCH functionality :
+
+AccountEvent :
+
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="sstring" type="String" />
+</aura:event>
+
+SearchComp Component :
+
+<aura:component >
+    <aura:attribute name="acname" type="String" />
+    <div class="slds">
+            <lightning:input label="Enter Account Name" name="acname" value="{!v.acname}" minlength="3" maxlength="30" messageWhenBadInput="Please enter minimum of 3 characters" /> 
+            <lightning:button label="Search" variant="brand" onclick="{!c.sendData}"/>
+    </div>
+</aura:component>
+
+SearchComp Controller :
+
+({
+	sendData : function(component, event, helper) {
+		var st=component.get("v.acname");
+        var ev=$A.get("e.c:AccountEvent");
+        ev.setParams({"sstring":st});
+        ev.fire();
+	}
+})
+
+
+Apex Class :
+
+public class AccountDetailsControllers {
+	@AuraEnabled
+    public static list<Account> showAccounts()
+    {
+        return [select Name,AnnualRevenue, BillingState from Account order by Name];
+    }
+    
+    @AuraEnabled
+    public static list<Account> searchAccountRecords(String acname)
+    {
+        return [select Name,AnnualRevenue, BillingState from Account Where Name=:acname];
+    }
+}
+
+DisplayComp Component :
+
+<aura:component controller="AccountDetailsControllers">
+    <aura:attribute name="alist" type="List" />
+    <aura:handler event="c:AccountEvent" action="{!c.searchAccount}" />
+    <div class="slds">
+    	<div class="slds-table slds-table--bordered">
+            <table>
+                <thead>
+                	<tr>
+                    	<th>Account ID</th>
+                        <th>Account Name</th>
+                        <th>Account Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	<aura:iteration items="{!v.alist}" var="a">
+                    	<tr>
+                        	<td>{!a.Id}</td>
+                            <td>{!a.Name}</td>
+                            <td>{!a.AnnualRevenue}</td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</aura:component>
+
+DisplayComp Controller :
+
+({
+	searchAccount : function(component, event, helper) {
+		var searchstr =event.getParam("sstring");
+        var action=component.get("c.searchAccountRecords");
+        action.setParams({"acname":searchstr});
+        action.setCallback(this,function(response)
+                           {
+                               if(response.getState()=='SUCCESS')
+                               {
+                                  component.set("v.alist",response.getReturnValue()); 
+                               }
+                           });
+        $A.enqueueAction(action);
+	}
+})
+
+SearchContainer Component :
+
+<aura:component >
+	<div class="slds">
+     	<div class="slds-box">
+            <c:SearchComp />
+        </div>
+        <div class="slds-box">
+            <c:DisplayComp />
+        </div>
+    </div>
+</aura:component>
+
+StudentComp COMPONENT :
+
+<aura:component controller="StudentController">
+    <div class="slds">
+        <div class="slds-grid" style="background:lightgrey">
+            <div class="slds-col slds-size--11-of-12" style="text-align:center">
+                <span style="font-size:20px;font-style:bold">Students</span>
+            </div>
+            <div class="slds-col slds-size--1-of-12" style="text-align:center" >
+                <lightning:buttonMenu iconName="utility:threedots" iconSize="large" menuAlignment="right" onselect="{!c.selectAction}" variant="border-filled">
+                    <lightning:menuItem label="Create" value="0" /> 
+                    <lightning:menuItem label="Update" value="1" /> 
+                    <lightning:menuItem label="Search" value="2" /> 
+                    <lightning:menuItem label="Display" value="3" /> 
+                </lightning:buttonMenu>
+            </div>
+        </div>
+        <div aura:id="bodysec">
+            {!v.body}
+        </div>
+    </div>
+</aura:component>
+
+StudentComp CONTROLLER :
+
+({
+    selectAction : function(component, event, helper) {
+        var selVal=event.detail.menuItem.get("v.value");
+        component.set("v.body",[]);
+        if (selVal==0)
+        {
+            $A.createComponent(
+                "c:StudentPage",
+                {},
+                function(sp)
+                {
+                    var cbdy=component.get("v.body");
+                    cbdy.push(sp);
+                    component.set("v.body",cbdy);
+                }
+            );
+        }
+        if (selVal==1)
+        {
+            alert("Under Development");
+        }
+        if (selVal==2)
+        {
+            $A.createComponent(
+                "c:SearchContainer",
+                {},
+                function(cs)
+                {
+                    var sbody=component.get("v.body");
+                    sbody.push(cs);
+                    component.set("v.body",sbody);
+                }
+            );
+        }
+        if (selVal==3)
+        {
+            $A.createComponent(
+                "c:StudentData",
+                {},
+                function(cs)
+                {
+                    var sbody=component.get("v.body");
+                    sbody.push(cs);
+                    component.set("v.body",sbody);
+                }
+            );
+        }
+        
+    }
+ })
+ 
+ -------------------------------------------------------------
+ 
+ 46)
+ 
+ For Mini layout in SF1 :
+ 
+ DisplayComp Component :
+ 
+ <aura:component controller="AccountDetailsControllers">
+    <aura:attribute name="alist" type="List" />
+    <aura:handler event="c:AccountEvent" action="{!c.searchAccount}" />
+    <div class="slds">
+    	<div class="slds-table slds-table--bordered">
+           <!-- <table>
+                <thead>
+                	<tr>
+                    	<th>Account ID</th>
+                        <th>Account Name</th>
+                        <th>Account Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	<aura:iteration items="{!v.alist}" var="a">
+                    	<tr>
+                        	<td>{!a.Id}</td>
+                            <td>{!a.Name}</td>
+                            <td>{!a.AnnualRevenue}</td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>-->
+            <aura:if isTrue="{! !empty(v.alist)}">
+           <!-- <force:recordView recordId="{!v.alist[0].Id}" type="MINI" /> -->
+			<force:recordEdit recordId="{!v.alist[0].Id}" />
+                </aura:if>
+        </div>
+    </div>
+</aura:component>
+
+
+--------------------------------------------------------------------------
+
+47)
+
+
+Saving Record :
+
+DisplayComp Component :
+
+<aura:component controller="AccountDetailsControllers">
+    <aura:attribute name="alist" type="List" />
+    <aura:attribute name="editStatus" type="String" />
+    <aura:handler event="c:AccountEvent" action="{!c.searchAccount}" />
+    <aura:handler event="force:recordSaveSuccess" name="onSaveSuccess" action="{!c.showStatus}" />
+    <div class="slds">
+    	<div class="slds-table slds-table--bordered">
+           <!-- <table>
+                <thead>
+                	<tr>
+                    	<th>Account ID</th>
+                        <th>Account Name</th>
+                        <th>Account Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	<aura:iteration items="{!v.alist}" var="a">
+                    	<tr>
+                        	<td>{!a.Id}</td>
+                            <td>{!a.Name}</td>
+                            <td>{!a.AnnualRevenue}</td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>-->
+            <aura:if isTrue="{! !empty(v.alist)}">
+            <!--<force:recordView recordId="{!v.alist[0].Id}" type="MINI" />-->
+                <force:recordEdit aura:id="rsave" recordId="{!v.alist[0].Id}" />
+                <lightning:button label="Save Record" variant="brand" onclick="{!c.accSave}" />
+                {!v.editStatus}
+                </aura:if>
+        </div>
+    </div>
+</aura:component>
+
+
+DisplayComp Controller :
+
+({
+	searchAccount : function(component, event, helper) {
+		var searchstr =event.getParam("sstring");
+        var action=component.get("c.searchAccountRecords");
+        action.setParams({"acname":searchstr});
+        action.setCallback(this,function(response)
+                           {
+                               if(response.getState()=='SUCCESS')
+                               {
+                                  component.set("v.alist",response.getReturnValue()); 
+                               }
+                           });
+        $A.enqueueAction(action);
+	},
+    accSave : function(component, event, helper) {
+        var rcmp=component.find("rsave");
+        var rev=rcmp.get("e.recordSave");
+        rev.fire();
+    },
+    showStatus : function(component, event, helper) {
+    	component.set("v.editStatus","Record Successfully Saved..!!")
+    }
+})
+
+---------------------------------------------------------------
+
+
+
+48)
+
+Edit button on detail page
+
+DisplayComp Component :
+
+<aura:component controller="AccountDetailsControllers">
+    <aura:attribute name="alist" type="List" />
+    <aura:attribute name="editStatus" type="String" />
+    <aura:handler event="c:AccountEvent" action="{!c.searchAccount}" />
+    <aura:handler event="force:recordSaveSuccess" name="onSaveSuccess" action="{!c.showStatus}" />
+    <div class="slds">
+    	<div class="slds-table slds-table--bordered">
+           <!-- <table>
+                <thead>
+                	<tr>
+                    	<th>Account ID</th>
+                        <th>Account Name</th>
+                        <th>Account Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	<aura:iteration items="{!v.alist}" var="a">
+                    	<tr>
+                        	<td>{!a.Id}</td>
+                            <td>{!a.Name}</td>
+                            <td>{!a.AnnualRevenue}</td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>-->
+            <aura:if isTrue="{! !empty(v.alist)}">
+                <div>
+                	<lightning:button label="Edit" variant="brand" onclick="{!c.editRec}" />
+                </div>
+               
+                {!v.body}
+                 
+            <force:recordView recordId="{!v.alist[0].Id}" type="MINI" />
+               <!-- <lightning:button label="Edit" variant="brand" onclick="{!c.editRec}" />
+                <force:recordEdit aura:id="rsave" recordId="{!v.alist[0].Id}" />
+                <lightning:button label="Save Record" variant="brand" onclick="{!c.accSave}" />-->
+                {!v.editStatus}
+                </aura:if>
+        </div>
+    </div>
+</aura:component>
+
+DisplayComp Controller :
+
+({
+	searchAccount : function(component, event, helper) {
+		var searchstr =event.getParam("sstring");
+        var action=component.get("c.searchAccountRecords");
+        action.setParams({"acname":searchstr});
+        action.setCallback(this,function(response)
+                           {
+                               if(response.getState()=='SUCCESS')
+                               {
+                                  component.set("v.alist",response.getReturnValue()); 
+                               }
+                           });
+        $A.enqueueAction(action);
+	},
+    accSave : function(component, event, helper) {
+        var rcmp=component.find("rsave");
+        var rev=rcmp.get("e.recordSave");
+        rev.fire();
+    },
+    showStatus : function(component, event, helper) {
+    	component.set("v.editStatus","Record Successfully Saved..!!")
+    },
+    editRec : function(component, event, helper) {
+       $A.createComponent(
+           "force:recordEdit",
+           {
+               "aura:id":"rsave",
+               "recordId":component.get("v.alist[0].Id")
+           },
+           function(re)
+           {
+               var cb=component.get("v.body");
+               cb.push(re);
+               component.set("v.body",cb);
+           }
+       ); 
+        $A.createComponent(
+           "lightning:button",
+           {
+               "label":"Record Save",
+               "variant":"brand",
+               "onclick":component.getReference("c:accSave")
+           },
+           function(re)
+           {
+               var cb=component.get("v.body");
+               cb.push(re);
+               component.set("v.body",cb);
+           }
+       ); 
+    }
+})
+
+------------------------------------------------------
+
+49)
+
+Last topic :
+Lightning Spinner
+
+DisplayComp Component :
+
+
+<aura:component controller="AccountDetailsControllers">
+    <aura:attribute name="alist" type="List" />
+    <aura:attribute name="editStatus" type="String" />
+    <aura:handler event="c:AccountEvent" action="{!c.searchAccount}" />
+    <aura:handler event="force:recordSaveSuccess" name="onSaveSuccess" action="{!c.showStatus}" />
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}" />
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}" />
+    <div class="slds">
+    	<div class="slds-table slds-table--bordered">
+           <!-- <table>
+                <thead>
+                	<tr>
+                    	<th>Account ID</th>
+                        <th>Account Name</th>
+                        <th>Account Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	<aura:iteration items="{!v.alist}" var="a">
+                    	<tr>
+                        	<td>{!a.Id}</td>
+                            <td>{!a.Name}</td>
+                            <td>{!a.AnnualRevenue}</td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>-->
+            <div class="slds-align--absolute-center">
+            	<lightning:spinner aura:id="spn" class="slds-hide" size="large">
+                </lightning:spinner>
+            </div>
+            <aura:if isTrue="{! !empty(v.alist)}">
+                <div>
+                	<lightning:button label="Edit" variant="brand" onclick="{!c.editRec}" />
+                </div>
+               
+                {!v.body}
+                 
+            <force:recordView recordId="{!v.alist[0].Id}"  />
+               <!-- <lightning:button label="Edit" variant="brand" onclick="{!c.editRec}" />
+                <force:recordEdit aura:id="rsave" recordId="{!v.alist[0].Id}" />
+                <lightning:button label="Save Record" variant="brand" onclick="{!c.accSave}" />-->
+                {!v.editStatus}
+                </aura:if>
+        </div>
+    </div>
+</aura:component>
+
+
+DisplayComp Controller :
+
+
+({
+	searchAccount : function(component, event, helper) {
+		var searchstr =event.getParam("sstring");
+        var action=component.get("c.searchAccountRecords");
+        action.setParams({"acname":searchstr});
+        action.setCallback(this,function(response)
+                           {
+                               if(response.getState()=='SUCCESS')
+                               {
+                                  component.set("v.alist",response.getReturnValue()); 
+                               }
+                           });
+        $A.enqueueAction(action);
+	},
+    accSave : function(component, event, helper) {
+        var rcmp=component.find("rsave");
+        var rev=rcmp.get("e.recordSave");
+        rev.fire();
+    },
+    showStatus : function(component, event, helper) {
+    	component.set("v.editStatus","Record Successfully Saved..!!")
+    },
+    editRec : function(component, event, helper) {
+       $A.createComponent(
+           "force:recordEdit",
+           {
+               "aura:id":"rsave",
+               "recordId":component.get("v.alist[0].Id")
+           },
+           function(re)
+           {
+               var cb=component.get("v.body");
+               cb.push(re);
+               component.set("v.body",cb);
+           }
+       ); 
+        $A.createComponent(
+           "lightning:button",
+           {
+               "label":"Record Save",
+               "variant":"brand",
+               "onclick":component.getReference("c:accSave")
+           },
+           function(re)
+           {
+               var cb=component.get("v.body");
+               cb.push(re);
+               component.set("v.body",cb);
+           }
+       ); 
+    },
+    
+    showSpinner : function(component, event, helper) {
+        $A.util.removeClass(component.find("spn"),"slds-hide");
+    },
+    
+    hideSpinner : function(component, event, helper) {
+        $A.util.addClass(component.find("spn"),"slds-hide");
+    }
+})
+
+----------------------------------------------------------------
+
+50)
+
+adding Chatter 
+
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.loadMainApp}" />
+    <div class="slds" style="padding-top:10px;padding-left:10px;">        
+	<c:tabs >
+    	<c:tab title="Chatter">
+        	 <forceChatter:feed type="groups"/>	    
+        </c:tab>
+        <c:tab title="Students">
+        	<c:StudentComp />
+        </c:tab>
+        <c:tab title="Locations">
+        	<c:LocalComp />
+        </c:tab>
+        <c:tab title="Reports">
+        	<c:ReportComp />
+        </c:tab>
+        <c:tab title="Panic">
+            <c:PanicHome />
+        </c:tab>
+    </c:tabs>
+        {!v.body}
+    </div>
+</aura:component>
+
+----------------------------------------------------------------------------------
